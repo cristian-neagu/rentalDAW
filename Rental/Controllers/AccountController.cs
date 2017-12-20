@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Rental.Data;
 using Rental.Models;
 using Rental.Models.AccountViewModels;
 using Rental.Services;
@@ -220,11 +223,18 @@ namespace Rental.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                //var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+                //optionsBuilder.UseSqlite("Data Source=blog.db");
+                //var context = new ApplicationDbContext(optionsBuilder.Options);
+
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, SecurityStamp = Guid.NewGuid().ToString()};
                 var result = await _userManager.CreateAsync(user, model.Password);
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+
+                    await _userManager.AddToRoleAsync(user, "user");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);

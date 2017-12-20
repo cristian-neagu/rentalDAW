@@ -11,9 +11,10 @@ using System;
 namespace Rental.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171220201454_EntityRelationsMigration")]
+    partial class EntityRelationsMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -159,6 +160,8 @@ namespace Rental.Data.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed");
 
+                    b.Property<int?>("RoleId");
+
                     b.Property<string>("SecurityStamp");
 
                     b.Property<bool>("TwoFactorEnabled");
@@ -175,6 +178,8 @@ namespace Rental.Data.Migrations
                         .IsUnique()
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -221,6 +226,20 @@ namespace Rental.Data.Migrations
                     b.ToTable("Reservation");
                 });
 
+            modelBuilder.Entity("Rental.Models.Role", b =>
+                {
+                    b.Property<int>("RoleId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("DisplayName");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("RoleId");
+
+                    b.ToTable("Role");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
@@ -264,6 +283,13 @@ namespace Rental.Data.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Rental.Models.ApplicationUser", b =>
+                {
+                    b.HasOne("Rental.Models.Role", "Role")
+                        .WithMany("Users")
+                        .HasForeignKey("RoleId");
                 });
 
             modelBuilder.Entity("Rental.Models.Reservation", b =>

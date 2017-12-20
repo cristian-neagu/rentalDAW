@@ -1,4 +1,6 @@
-﻿namespace Rental.Models
+﻿using System.Collections.Generic;
+
+namespace Rental.Models
 {
     public class Car
     {
@@ -8,5 +10,6 @@
         public string LicenseNumber { get; set; }
         public string Color { get; set; }
         public int Seats { get; set; }
+        public ICollection<Reservation> Reservations { get; set; }
     }
 }
