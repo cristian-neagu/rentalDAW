@@ -50,6 +50,8 @@ namespace Rental.Controllers
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
+            ViewData["showUserLinks"] = User.IsInRole("user");
+            ViewData["showAdminLinks"] = User.IsInRole("admin");
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
@@ -60,6 +62,8 @@ namespace Rental.Controllers
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+            ViewData["showUserLinks"] = User.IsInRole("user");
+            ViewData["showAdminLinks"] = User.IsInRole("admin");
             if (ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
@@ -104,7 +108,8 @@ namespace Rental.Controllers
 
             var model = new LoginWith2faViewModel { RememberMe = rememberMe };
             ViewData["ReturnUrl"] = returnUrl;
-
+            ViewData["showUserLinks"] = User.IsInRole("user");
+            ViewData["showAdminLinks"] = User.IsInRole("admin");
             return View(model);
         }
 
@@ -158,7 +163,8 @@ namespace Rental.Controllers
             }
 
             ViewData["ReturnUrl"] = returnUrl;
-
+            ViewData["showUserLinks"] = User.IsInRole("user");
+            ViewData["showAdminLinks"] = User.IsInRole("admin");
             return View();
         }
 
@@ -212,6 +218,8 @@ namespace Rental.Controllers
         public IActionResult Register(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+            ViewData["showUserLinks"] = User.IsInRole("user");
+            ViewData["showAdminLinks"] = User.IsInRole("admin");
             return View();
         }
 
@@ -221,6 +229,8 @@ namespace Rental.Controllers
         public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+            ViewData["showUserLinks"] = User.IsInRole("user");
+            ViewData["showAdminLinks"] = User.IsInRole("admin");
             if (ModelState.IsValid)
             {
                 //var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
@@ -302,6 +312,8 @@ namespace Rental.Controllers
                 // If the user does not have an account, then ask the user to create an account.
                 ViewData["ReturnUrl"] = returnUrl;
                 ViewData["LoginProvider"] = info.LoginProvider;
+                ViewData["showUserLinks"] = User.IsInRole("user");
+                ViewData["showAdminLinks"] = User.IsInRole("admin");
                 var email = info.Principal.FindFirstValue(ClaimTypes.Email);
                 return View("ExternalLogin", new ExternalLoginViewModel { Email = email });
             }
@@ -336,6 +348,8 @@ namespace Rental.Controllers
             }
 
             ViewData["ReturnUrl"] = returnUrl;
+            ViewData["showUserLinks"] = User.IsInRole("user");
+            ViewData["showAdminLinks"] = User.IsInRole("admin");
             return View(nameof(ExternalLogin), model);
         }
 
@@ -394,6 +408,8 @@ namespace Rental.Controllers
         [AllowAnonymous]
         public IActionResult ForgotPasswordConfirmation()
         {
+            ViewData["showUserLinks"] = User.IsInRole("user");
+            ViewData["showAdminLinks"] = User.IsInRole("admin");
             return View();
         }
 
@@ -406,6 +422,8 @@ namespace Rental.Controllers
                 throw new ApplicationException("A code must be supplied for password reset.");
             }
             var model = new ResetPasswordViewModel { Code = code };
+            ViewData["showUserLinks"] = User.IsInRole("user");
+            ViewData["showAdminLinks"] = User.IsInRole("admin");
             return View(model);
         }
 
@@ -430,6 +448,8 @@ namespace Rental.Controllers
                 return RedirectToAction(nameof(ResetPasswordConfirmation));
             }
             AddErrors(result);
+            ViewData["showUserLinks"] = User.IsInRole("user");
+            ViewData["showAdminLinks"] = User.IsInRole("admin");
             return View();
         }
 

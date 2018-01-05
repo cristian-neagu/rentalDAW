@@ -12,20 +12,24 @@ namespace Rental.Controllers
     {
         public IActionResult Index()
         {
+            ViewData["showUserLinks"] = User.IsInRole("user");
+            ViewData["showAdminLinks"] = User.IsInRole("admin");
             return View();
         }
 
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
-
+            ViewData["showUserLinks"] = User.IsInRole("user");
+            ViewData["showAdminLinks"] = User.IsInRole("admin");
             return View();
         }
 
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
-
+            ViewData["showUserLinks"] = User.IsInRole("user");
+            ViewData["showAdminLinks"] = User.IsInRole("admin");
             return View();
         }
 
