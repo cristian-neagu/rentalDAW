@@ -30,24 +30,19 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Cars">Cars</a></li>
+                    <li><a asp-area="" asp-controller="Cars" asp-action="Index">Cars</a></li>
                     @if (ViewData["showUserLinks"] != null && ViewData["showUserLinks"].ToString() == "True")
                     {
                     <li><a asp-area="" asp-controller="Home" asp-action="Reserve">Make a reservation</a></li>
                     }
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                    @if (ViewData["showAdminLinks"] != null && ViewData["showAdminLinks"].ToString() == "True")
-                    {
-                    <li><a asp-area="" asp-controller="Home" asp-action="Admin">Admin</a></li>
-                    }
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
         </div>
     </nav>
-    @RenderBody()
+        @RenderBody()
 
 
     <environment include="Development">

@@ -17,6 +17,7 @@ namespace Rental.Data
 
 
         public DbSet<Car> Cars { get; set; }
+        public DbSet<CarType> CarType { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

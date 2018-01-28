@@ -1,0 +1,88 @@
+﻿@model Rental.Models.Car
+
+@{
+    ViewData["Title"] = "Details";
+}
+<div class="container">
+    <h2>Details</h2>
+
+    <div>
+        <h4>Car</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                Make
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.CarType.Make)
+            </dd>
+            <dt>
+                Model
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.CarType.Model)
+            </dd>
+            <dt>
+                License Number
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.LicenseNumber)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Color)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Color)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Seats)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Seats)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Doors)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Doors)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.AirCon)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.AirCon)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.PricePerDay)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PricePerDay)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Reservations)
+            </dt>
+            <dd>
+                <table class="table">
+                    <tr>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                    </tr>
+                    @foreach (var item in Model.Reservations)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StartDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndDate)
+                    </td>
+                </tr>
+    }
+                </table>
+            </dd>
+        </dl>
+    </div>
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+</div>

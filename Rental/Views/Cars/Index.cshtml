@@ -1,0 +1,114 @@
+﻿@model IEnumerable<Rental.Models.Car>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class="container">
+    <h2>Index</h2>
+    @if (ViewData["showAdminLinks"] != null && ViewData["showAdminLinks"].ToString() == "True")
+    {
+        <p>
+            <a asp-action="Create">Create New</a>
+        </p>
+    }
+
+    <form asp-action="Index" method="get">
+        <div class="form-actions no-color">
+            <p>
+                Find by name: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
+                <input type="submit" value="Search" class="btn btn-default" /> |
+                <a asp-action="Index">Back to Full List</a>
+            </p>
+        </div>
+    </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["MakeSortParam"]">Make</a>
+                </th>
+                <th>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["ModelSortParam"]">Model</a>
+                </th>
+                <th>
+                    License Number
+                </th>
+                <th>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["ColorSortParam"]">Color</a>
+                </th>
+                <th>
+                    Number of seats
+                </th>
+                <th>
+                    Number of doors
+                </th>
+                <th>
+                    Air Conditioning
+                </th>
+                @if (ViewData["ShowAdminLinks"] != null && ViewData["ShowAdminLinks"].ToString() == "True")
+                {
+                    <th>
+                        Status
+                    </th>
+                }
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                @if (item.Available || (ViewData["showAdminLinks"] != null && ViewData["showAdminLinks"].ToString() == "True"))
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CarType.Make)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CarType.Model)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LicenseNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Color)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Seats)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Doors)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AirCon)
+                        </td>
+                        @if (ViewData["ShowAdminLinks"] != null && ViewData["ShowAdminLinks"].ToString() == "True")
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Available)
+                            </td>
+                        }
+                        <td>
+                            @if (ViewData["showAdminLinks"] != null && ViewData["showAdminLinks"].ToString() == "True")
+                            {
+                                <a asp-action="Edit" asp-route-id="@item.CarId">Edit | </a>
+                            }
+                            <a asp-action="Details" asp-route-id="@item.CarId"> Details </a>
+                            @if (ViewData["showAdminLinks"] != null && ViewData["showAdminLinks"].ToString() == "True")
+                            {
+                                <a asp-action="Delete" asp-route-id="@item.CarId"> | Delete </a>
+                            }
+                            @if (ViewData["showAdminLinks"] != null && ViewData["showAdminLinks"].ToString() == "True")
+                            {
+                                <a asp-action="ChangeAvailability" asp-route-id="@item.CarId"> | Change availability </a>
+                            }
+                        </td>
+
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
