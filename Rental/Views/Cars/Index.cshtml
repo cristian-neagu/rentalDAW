@@ -100,10 +100,6 @@
                             {
                                 <a asp-action="Delete" asp-route-id="@item.CarId"> | Delete </a>
                             }
-                            @if (ViewData["showAdminLinks"] != null && ViewData["showAdminLinks"].ToString() == "True")
-                            {
-                                <a asp-action="ChangeAvailability" asp-route-id="@item.CarId"> | Change availability </a>
-                            }
                         </td>
 
                     </tr>

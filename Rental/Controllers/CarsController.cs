@@ -96,7 +96,7 @@ namespace Rental.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            PopulateCarTypesDropDownList(car.CarType.Id);
+            PopulateCarTypesDropDownList();
             return View(car);
         }
 
@@ -109,11 +109,13 @@ namespace Rental.Controllers
             }
 
             var car = await _context.Cars.Include(m => m.CarType).SingleOrDefaultAsync(m => m.CarId == id);
+            var selected = _context.CarType.Single(ct => ct.Id == car.CarType.Id);
             if (car == null)
             {
                 return NotFound();
             }
-            PopulateCarTypesDropDownList(car.CarType.Id);
+            ViewData["selectedModel"] = selected.Id;
+            PopulateCarTypesDropDownList();
             return View(car);
         }
 
@@ -122,7 +124,7 @@ namespace Rental.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CarId,LicenseNumber,Color,Seats")] Car car)
+        public async Task<IActionResult> Edit(int id, [Bind("CarId,LicenseNumber,Color,Seats,Doors,AirCon,Available,PricePerDay")] Car car, int CarType)
         {
             if (id != car.CarId)
             {
@@ -133,6 +135,8 @@ namespace Rental.Controllers
             {
                 try
                 {
+                    var selected = _context.CarType.Single(ct => ct.Id == CarType);
+                    car.CarType = selected;
                     _context.Update(car);
                     await _context.SaveChangesAsync();
                 }
@@ -149,16 +153,17 @@ namespace Rental.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            PopulateCarTypesDropDownList(car.CarType.Id);
+            PopulateCarTypesDropDownList();
             return View(car);
         }
-
+        // Aici ar trebui sa ii trimit pe parametru fix obiectul care se afla pe car.CarType din metodele Create si Edit (GET)
         private void PopulateCarTypesDropDownList(object selectedCarType = null)
         {
             var carTypeQuery = from c in _context.CarType
                                    orderby c.Make
                                    select c;
-            ViewBag.CarType = new SelectList(carTypeQuery.AsNoTracking(), "Id", "FullType", selectedCarType);
+            
+            ViewBag.CarType = new SelectList(carTypeQuery.AsNoTracking(), "Id", "FullType" /*selected car from db*/);
         }
 
         // GET: Cars/Delete/5

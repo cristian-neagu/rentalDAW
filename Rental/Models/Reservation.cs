@@ -9,5 +9,6 @@ namespace Rental.Models
         public ApplicationUser User { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public string Observations { get; set; }
     }
 }

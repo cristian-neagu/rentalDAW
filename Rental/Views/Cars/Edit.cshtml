@@ -68,4 +68,16 @@
     </div>
     @section Scripts {
         @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+<script>
+            $(document).ready(function () {
+                var selectedId = @ViewData["selectedModel"];
+                var options = $("#CarType").find("option");
+                options.each(function (index, e) {
+                    if ($(e).val() == selectedId) {
+                        $("#CarType")[0].selectedIndex = index;
+                    }
+                })
+            })
+
+</script>
     }

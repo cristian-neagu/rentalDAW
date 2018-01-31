@@ -24,5 +24,7 @@ namespace Rental.Data
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Car>().ToTable("Cars");
         }
+
+        public DbSet<Rental.Models.Reservation> Reservation { get; set; }
     }
 }
