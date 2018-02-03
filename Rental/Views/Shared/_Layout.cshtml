@@ -8,6 +8,11 @@
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.2/fullcalendar.min.css" />
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.2/fullcalendar.min.js"></script>
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css"
@@ -33,7 +38,7 @@
                     <li><a asp-area="" asp-controller="Cars" asp-action="Index">Cars</a></li>
                     @if (ViewData["showUserLinks"] != null && ViewData["showUserLinks"].ToString() == "True")
                     {
-                        <li><a asp-area="" asp-controller="Home" asp-action="Reserve">Make a reservation</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="MakeAReservation">Make a reservation</a></li>
                     }
                     @if (ViewData["showAdminLinks"] != null && ViewData["showAdminLinks"].ToString() == "True")
                     {
@@ -54,7 +59,6 @@
 
 
     <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>

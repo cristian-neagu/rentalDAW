@@ -68,6 +68,13 @@ namespace Rental.Controllers
             return View();
         }
 
+        public IActionResult MakeAReservation()
+        {
+            ViewData["showUserLinks"] = User.IsInRole("user");
+            ViewData["showAdminLinks"] = User.IsInRole("admin");
+            return View();
+        }
+
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
