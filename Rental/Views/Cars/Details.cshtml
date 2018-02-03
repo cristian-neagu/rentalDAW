@@ -53,39 +53,46 @@
                 @Html.DisplayFor(model => model.AirCon)
             </dd>
             <dt>
-                @Html.DisplayNameFor(model => model.PricePerDay)
+                Price per day ($)
             </dt>
             <dd>
                 @Html.DisplayFor(model => model.PricePerDay)
             </dd>
             <dt>
-                Status
+                @Html.DisplayNameFor(model => model.CarType.Image)
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.Available)
+                <img src="@Html.DisplayFor(model => model.CarType.Image)" style=" max-width: 500px" />
             </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.Reservations)
-            </dt>
-            <dd>
-                <table class="table">
-                    <tr>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                    </tr>
-                    @foreach (var item in Model.Reservations)
-            {
+            @if (ViewData["showAdminLinks"] != null && ViewData["showAdminLinks"].ToString() == "True")
+    {
+        <dt style="margin-top:20px">
+            @Html.DisplayNameFor(model => model.Reservations)
+        </dt>
+        <dd style="margin-top:20px">
+            <table class="table">
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.StartDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EndDate)
-                    </td>
+                    <th>User</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
                 </tr>
-    }
-                </table>
-            </dd>
+                @foreach (var item in Model.Reservations)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </td>
+            </tr>
+}
+            </table>
+        </dd>
+}
         </dl>
     </div>
     <div>

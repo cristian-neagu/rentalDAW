@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -62,8 +63,9 @@ namespace Rental.Controllers
             }
 
             var car = await _context.Cars
-                .Include(c => c.Reservations)
                 .Include(c => c.CarType)
+                .Include(c => c.Reservations)
+                    .ThenInclude(u => u.User)
                 .AsNoTracking()
                 .SingleOrDefaultAsync(m => m.CarId == id);
             if (car == null)
@@ -71,12 +73,17 @@ namespace Rental.Controllers
                 return NotFound();
             }
 
+            ViewData["showUserLinks"] = User.IsInRole("user");
+            ViewData["showAdminLinks"] = User.IsInRole("admin");
             return View(car);
         }
 
         // GET: Cars/Create
+        [Authorize(Roles = "admin")]
         public IActionResult Create()
         {
+            ViewData["showUserLinks"] = User.IsInRole("user");
+            ViewData["showAdminLinks"] = User.IsInRole("admin");
             PopulateCarTypesDropDownList();
             return View();
         }
@@ -86,6 +93,7 @@ namespace Rental.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Create([Bind("CarId,LicenseNumber,Color,Seats,Doors,AirCon,Available,CarType,PricePerDay")] Car car)
         {
             if (ModelState.IsValid)
@@ -101,6 +109,7 @@ namespace Rental.Controllers
         }
 
         // GET: Cars/Edit/5
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -116,6 +125,8 @@ namespace Rental.Controllers
             }
             ViewData["selectedModel"] = selected.Id;
             PopulateCarTypesDropDownList();
+            ViewData["showUserLinks"] = User.IsInRole("user");
+            ViewData["showAdminLinks"] = User.IsInRole("admin");
             return View(car);
         }
 
@@ -124,6 +135,7 @@ namespace Rental.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(int id, [Bind("CarId,LicenseNumber,Color,Seats,Doors,AirCon,Available,PricePerDay")] Car car, int CarType)
         {
             if (id != car.CarId)
@@ -167,6 +179,7 @@ namespace Rental.Controllers
         }
 
         // GET: Cars/Delete/5
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -183,10 +196,13 @@ namespace Rental.Controllers
                 return NotFound();
             }
 
+            ViewData["showUserLinks"] = User.IsInRole("user");
+            ViewData["showAdminLinks"] = User.IsInRole("admin");
             return View(car);
         }
 
         // POST: Cars/Delete/5
+        [Authorize(Roles = "admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

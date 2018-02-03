@@ -33,7 +33,7 @@
                     <span asp-validation-for="Doors" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="AirCon" class="control-label"></label>
+                    <label asp-for="AirCon" class="control-label">Air Conditioning</label>
                     <input asp-for="AirCon" class="form-control" />
                     <span asp-validation-for="AirCon" class="text-danger"></span>
                 </div>
@@ -43,12 +43,12 @@
                     <span asp-validation-for="Available" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="PricePerDay" class="control-label"></label>
+                    <label asp-for="PricePerDay" class="control-label">Price per Day</label>
                     <input asp-for="PricePerDay" class="form-control" />
                     <span asp-validation-for="PricePerDay" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="CarType.Id" class="control-label"></label>
+                    <label asp-for="CarType.Id" class="control-label">Car Type</label>
                     <select asp-for="CarType.Id" class="form-control" asp-items="ViewBag.CarType">
                         <option value="">-- Select Type --</option>
                     </select>

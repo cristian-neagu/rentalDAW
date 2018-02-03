@@ -145,6 +145,8 @@ namespace Rental.Controllers
             }
 
             var model = new ChangePasswordViewModel { StatusMessage = StatusMessage };
+            ViewData["showUserLinks"] = User.IsInRole("user");
+            ViewData["showAdminLinks"] = User.IsInRole("admin");
             return View(model);
         }
 
@@ -194,6 +196,8 @@ namespace Rental.Controllers
             }
 
             var model = new SetPasswordViewModel { StatusMessage = StatusMessage };
+            ViewData["showUserLinks"] = User.IsInRole("user");
+            ViewData["showAdminLinks"] = User.IsInRole("admin");
             return View(model);
         }
 
@@ -241,6 +245,8 @@ namespace Rental.Controllers
             model.ShowRemoveButton = await _userManager.HasPasswordAsync(user) || model.CurrentLogins.Count > 1;
             model.StatusMessage = StatusMessage;
 
+            ViewData["showUserLinks"] = User.IsInRole("user");
+            ViewData["showAdminLinks"] = User.IsInRole("admin");
             return View(model);
         }
 
@@ -282,6 +288,8 @@ namespace Rental.Controllers
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
             StatusMessage = "The external login was added.";
+            ViewData["showUserLinks"] = User.IsInRole("user");
+            ViewData["showAdminLinks"] = User.IsInRole("admin");
             return RedirectToAction(nameof(ExternalLogins));
         }
 
@@ -322,6 +330,8 @@ namespace Rental.Controllers
                 RecoveryCodesLeft = await _userManager.CountRecoveryCodesAsync(user),
             };
 
+            ViewData["showUserLinks"] = User.IsInRole("user");
+            ViewData["showAdminLinks"] = User.IsInRole("admin");
             return View(model);
         }
 
@@ -339,6 +349,8 @@ namespace Rental.Controllers
                 throw new ApplicationException($"Unexpected error occured disabling 2FA for user with ID '{user.Id}'.");
             }
 
+            ViewData["showUserLinks"] = User.IsInRole("user");
+            ViewData["showAdminLinks"] = User.IsInRole("admin");
             return View(nameof(Disable2fa));
         }
 
@@ -384,6 +396,8 @@ namespace Rental.Controllers
                 AuthenticatorUri = GenerateQrCodeUri(user.Email, unformattedKey)
             };
 
+            ViewData["showUserLinks"] = User.IsInRole("user");
+            ViewData["showAdminLinks"] = User.IsInRole("admin");
             return View(model);
         }
 
@@ -422,6 +436,8 @@ namespace Rental.Controllers
         [HttpGet]
         public IActionResult ResetAuthenticatorWarning()
         {
+            ViewData["showUserLinks"] = User.IsInRole("user");
+            ViewData["showAdminLinks"] = User.IsInRole("admin");
             return View(nameof(ResetAuthenticator));
         }
 
@@ -461,6 +477,8 @@ namespace Rental.Controllers
 
             _logger.LogInformation("User with ID {UserId} has generated new 2FA recovery codes.", user.Id);
 
+            ViewData["showUserLinks"] = User.IsInRole("user");
+            ViewData["showAdminLinks"] = User.IsInRole("admin");
             return View(model);
         }
 

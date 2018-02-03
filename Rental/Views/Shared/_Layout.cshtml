@@ -33,7 +33,15 @@
                     <li><a asp-area="" asp-controller="Cars" asp-action="Index">Cars</a></li>
                     @if (ViewData["showUserLinks"] != null && ViewData["showUserLinks"].ToString() == "True")
                     {
-                    <li><a asp-area="" asp-controller="Home" asp-action="Reserve">Make a reservation</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Reserve">Make a reservation</a></li>
+                    }
+                    @if (ViewData["showAdminLinks"] != null && ViewData["showAdminLinks"].ToString() == "True")
+                    {
+                        <li><a asp-area="" asp-controller="CarTypes" asp-action="Index">Car Types</a></li>
+                    }
+                    @if ((ViewData["showUserLinks"] != null && ViewData["showUserLinks"].ToString() == "True") || (ViewData["showAdminLinks"] != null && ViewData["showAdminLinks"].ToString() == "True"))
+                    {
+                        <li><a asp-area="" asp-controller="Reservations" asp-action="Index">Reservations</a></li>
                     }
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
@@ -42,7 +50,7 @@
             </div>
         </div>
     </nav>
-        @RenderBody()
+    @RenderBody()
 
 
     <environment include="Development">

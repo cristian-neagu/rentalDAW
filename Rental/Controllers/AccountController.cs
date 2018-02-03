@@ -53,6 +53,8 @@ namespace Rental.Controllers
             ViewData["showUserLinks"] = User.IsInRole("user");
             ViewData["showAdminLinks"] = User.IsInRole("admin");
             ViewData["ReturnUrl"] = returnUrl;
+            ViewData["showUserLinks"] = User.IsInRole("user");
+            ViewData["showAdminLinks"] = User.IsInRole("admin");
             return View();
         }
 
@@ -210,6 +212,8 @@ namespace Rental.Controllers
         [AllowAnonymous]
         public IActionResult Lockout()
         {
+            ViewData["showUserLinks"] = User.IsInRole("user");
+            ViewData["showAdminLinks"] = User.IsInRole("admin");
             return View();
         }
 
@@ -367,6 +371,8 @@ namespace Rental.Controllers
                 throw new ApplicationException($"Unable to load user with ID '{userId}'.");
             }
             var result = await _userManager.ConfirmEmailAsync(user, code);
+            ViewData["showUserLinks"] = User.IsInRole("user");
+            ViewData["showAdminLinks"] = User.IsInRole("admin");
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
@@ -374,6 +380,8 @@ namespace Rental.Controllers
         [AllowAnonymous]
         public IActionResult ForgotPassword()
         {
+            ViewData["showUserLinks"] = User.IsInRole("user");
+            ViewData["showAdminLinks"] = User.IsInRole("admin");
             return View();
         }
 
@@ -457,6 +465,8 @@ namespace Rental.Controllers
         [AllowAnonymous]
         public IActionResult ResetPasswordConfirmation()
         {
+            ViewData["showUserLinks"] = User.IsInRole("user");
+            ViewData["showAdminLinks"] = User.IsInRole("admin");
             return View();
         }
 
@@ -464,6 +474,8 @@ namespace Rental.Controllers
         [HttpGet]
         public IActionResult AccessDenied()
         {
+            ViewData["showUserLinks"] = User.IsInRole("user");
+            ViewData["showAdminLinks"] = User.IsInRole("admin");
             return View();
         }
 
